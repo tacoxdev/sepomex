@@ -98,6 +98,8 @@ describe('applyHttpSecurity', () => {
 
     expect(csp).toContain("script-src 'self'");
     expect(csp).toContain("frame-ancestors 'none'");
+    // QA corre por HTTP (solo IP); forzar HTTPS rompería Swagger ahí.
+    expect(csp).not.toContain('upgrade-insecure-requests');
   });
 
   it('echoes only allow-listed origins in CORS responses', async () => {

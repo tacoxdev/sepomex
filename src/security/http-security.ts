@@ -40,7 +40,13 @@ function buildCsp(
   swaggerEnabled: boolean,
 ): HelmetOptions['contentSecurityPolicy'] {
   if (swaggerEnabled) {
-    return { directives: { frameAncestors: ["'none'"] } };
+    return {
+      directives: {
+        frameAncestors: ["'none'"],
+        // QA se publica por HTTP; HTTPS se fuerza en el proxy, no aquí.
+        upgradeInsecureRequests: null,
+      },
+    };
   }
   return {
     useDefaults: false,
